@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { Header } from '@/components/layout/header';
-import { StructureSelector } from '@/components/layout/structure-selector';
+import { HomePage as HomePageContent } from '@/components/layout/home-page';
 import { ArrayVisualizer } from '@/components/visualizers/array-visualizer';
 import { useTheme } from '@/components/providers/theme-provider';
 
-export default function HomePage() {
+export default function MainPage() {
   const [currentStructure, setCurrentStructure] = useState<string>('home');
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -37,12 +37,7 @@ export default function HomePage() {
           </div>
         );
       default:
-        return (
-          <StructureSelector
-            selectedStructure={currentStructure}
-            onSelectStructure={setCurrentStructure}
-          />
-        );
+        return <HomePageContent onSelectStructure={setCurrentStructure} />;
     }
   };
 

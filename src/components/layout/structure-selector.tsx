@@ -1,81 +1,152 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { useTheme } from '@/components/providers/theme-provider';
-import { Moon, Sun, Database, Link, Layers, List, Home } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Database, Link, Layers, List, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface HeaderProps {
-  currentStructure?: string;
-  onStructureChange?: (structure: string) => void;
+interface StructureSelectorProps {
+  selectedStructure?: string;
+  onSelectStructure: (structure: string) => void;
 }
 
 const dataStructures = [
-  { id: 'home', name: 'Home', icon: Home },
-  { id: 'array', name: 'Array', icon: Database },
-  { id: 'linkedlist', name: 'Linked List', icon: Link },
-  { id: 'stack', name: 'Stack', icon: Layers },
-  { id: 'queue', name: 'Queue', icon: List },
+  {
+    id: 'array',
+    name: 'Array',
+    description: 'Contiguous memory with O(1) access time',
+    icon: Database,
+    complexity: 'Access: O(1), Search: O(n)',
+    features: ['Random Access', 'Fixed Size', 'Cache Friendly'],
+    color: 'bg-blue-500',
+  },
+  {
+    id: 'linkedlist',
+    name: 'Linked List',
+    description: 'Dynamic nodes connected with pointers',
+    icon: Link,
+    complexity: 'Insertion: O(1), Search: O(n)',
+    features: ['Dynamic Size', 'Sequential Access', 'Memory Efficient'],
+    color: 'bg-green-500',
+  },
+  {
+    id: 'stack',
+    name: 'Stack',
+    description: 'LIFO - Last In First Out principle',
+    icon: Layers,
+    complexity: 'Push/Pop: O(1)',
+    features: ['LIFO Order', 'Function Calls', 'Undo Operations'],
+    color: 'bg-purple-500',
+  },
+  {
+    id: 'queue',
+    name: 'Queue',
+    description: 'FIFO - First In First Out principle',
+    icon: List,
+    complexity: 'Enqueue/Dequeue: O(1)',
+    features: ['FIFO Order', 'Task Scheduling', 'BFS Algorithm'],
+    color: 'bg-orange-500',
+  },
 ];
 
-export function Header({
-  currentStructure = 'home',
-  onStructureChange,
-}: HeaderProps) {
-  const { theme, setTheme } = useTheme();
-
+export function StructureSelector({
+  selectedStructure,
+  onSelectStructure,
+}: StructureSelectorProps) {
   return (
-    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
-      <div className="container flex h-16 items-center justify-between">
-        {/* Logo/Title */}
-        <div className="flex items-center gap-3">
-          <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
-            <Database className="text-primary-foreground h-4 w-4" />
-          </div>
-          <div>
-            <h1 className="text-lg font-semibold">Data Structures</h1>
-            <p className="text-muted-foreground hidden text-xs sm:block">
-              Interactive Visualizer
-            </p>
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <nav className="hidden items-center gap-1 md:flex">
-          {dataStructures.map(structure => {
-            const Icon = structure.icon;
-            const isActive = currentStructure === structure.id;
-
-            return (
-              <Button
-                key={structure.id}
-                variant={isActive ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => onStructureChange?.(structure.id)}
-                className={cn('gap-2 transition-all', isActive && 'shadow-sm')}
-              >
-                <Icon className="h-4 w-4" />
-                <span className="hidden lg:inline">{structure.name}</span>
-              </Button>
-            );
-          })}
-        </nav>
-
-        {/* Theme Toggle */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="rounded-full"
-        >
-          {theme === 'dark' ? (
-            <Sun className="h-4 w-4" />
-          ) : (
-            <Moon className="h-4 w-4" />
-          )}
-          <span className="sr-only">Toggle theme</span>
-        </Button>
+    <div className="space-y-6">
+      <div className="space-y-2 text-center">
+        <h2 className="text-3xl font-bold">Choose a Data Structure</h2>
+        <p className="text-muted-foreground mx-auto max-w-2xl">
+          Select a data structure below to start learning through interactive
+          visualization. Each structure has unique properties and use cases.
+        </p>
       </div>
-    </header>
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {dataStructures.map(structure => {
+          const Icon = structure.icon;
+          const isSelected = selectedStructure === structure.id;
+
+          return (
+            <Card
+              key={structure.id}
+              className={cn(
+                'cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-lg',
+                'group relative overflow-hidden',
+                isSelected && 'ring-primary scale-[1.02] shadow-lg ring-2'
+              )}
+              onClick={() => onSelectStructure(structure.id)}
+            >
+              {/* Gradient Background */}
+              <div
+                className={cn(
+                  'absolute inset-0 opacity-5 transition-opacity group-hover:opacity-10',
+                  structure.color
+                )}
+              />
+
+              <CardHeader className="relative">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={cn(
+                        'rounded-lg p-2 text-white',
+                        structure.color
+                      )}
+                    >
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl">
+                        {structure.name}
+                      </CardTitle>
+                      <Badge variant="outline" className="mt-1 text-xs">
+                        {structure.complexity}
+                      </Badge>
+                    </div>
+                  </div>
+                  <ArrowRight
+                    className={cn(
+                      'text-muted-foreground h-5 w-5 transition-all',
+                      'group-hover:text-primary group-hover:translate-x-1',
+                      isSelected && 'text-primary translate-x-1'
+                    )}
+                  />
+                </div>
+                <CardDescription className="text-sm">
+                  {structure.description}
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent className="relative">
+                <div className="space-y-3">
+                  <div>
+                    <h4 className="mb-2 text-sm font-medium">Key Features:</h4>
+                    <div className="flex flex-wrap gap-1">
+                      {structure.features.map(feature => (
+                        <Badge
+                          key={feature}
+                          variant="secondary"
+                          className="text-xs"
+                        >
+                          {feature}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+    </div>
   );
 }
