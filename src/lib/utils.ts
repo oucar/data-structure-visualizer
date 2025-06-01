@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -22,8 +22,15 @@ export function validateNumberInput(value: string): number | null {
 }
 
 // Generate random array data
-export function generateRandomArray(length: number, min: number = 1, max: number = 100): number[] {
-  return Array.from({ length }, () => Math.floor(Math.random() * (max - min + 1)) + min);
+export function generateRandomArray(
+  length: number,
+  min: number = 1,
+  max: number = 100
+): number[] {
+  return Array.from(
+    { length },
+    () => Math.floor(Math.random() * (max - min + 1)) + min
+  );
 }
 
 // Color utilities for visualizations

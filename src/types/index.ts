@@ -1,5 +1,11 @@
 // Data Structure Types
-export type DataStructureType = 'array' | 'linkedlist' | 'stack' | 'queue' | 'tree' | 'graph';
+export type DataStructureType =
+  | 'array'
+  | 'linkedlist'
+  | 'stack'
+  | 'queue'
+  | 'tree'
+  | 'graph';
 
 // Array Types
 export interface ArrayElement {

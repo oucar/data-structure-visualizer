@@ -1,9 +1,15 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useTheme } from "@/components/providers/theme-provider";
-import { Moon, Sun, Database, Link, Layers, List } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { useTheme } from '@/components/providers/theme-provider';
+import { Moon, Sun, Database, Link, Layers, List } from 'lucide-react';
 
 export default function HomePage() {
   const { theme, setTheme } = useTheme();
@@ -36,12 +42,12 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            <h1 className="from-primary to-primary/60 bg-gradient-to-r bg-clip-text text-4xl font-bold text-transparent">
               Data Structures Visualizer
             </h1>
             <p className="text-muted-foreground mt-2">
@@ -51,10 +57,10 @@ export default function HomePage() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             className="rounded-full"
           >
-            {theme === "dark" ? (
+            {theme === 'dark' ? (
               <Sun className="h-5 w-5" />
             ) : (
               <Moon className="h-5 w-5" />
@@ -67,20 +73,22 @@ export default function HomePage() {
           <CardHeader>
             <CardTitle>Welcome to Data Structures Visualizer!</CardTitle>
             <CardDescription>
-              Your journey into understanding fundamental computer science concepts starts here.
+              Your journey into understanding fundamental computer science
+              concepts starts here.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              This interactive tool helps you learn data structures through visual representations
-              and hands-on manipulation. Choose a data structure below to get started!
+              This interactive tool helps you learn data structures through
+              visual representations and hands-on manipulation. Choose a data
+              structure below to get started!
             </p>
           </CardContent>
         </Card>
 
         {/* Data Structures Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {dataStructures.map((structure) => {
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {dataStructures.map(structure => {
             const Icon = structure.icon;
             return (
               <Card
@@ -88,9 +96,11 @@ export default function HomePage() {
                 className="cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg"
               >
                 <CardContent className="p-6 text-center">
-                  <Icon className="h-12 w-12 mx-auto mb-4 text-primary" />
-                  <h3 className="font-semibold text-lg mb-2">{structure.name}</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <Icon className="text-primary mx-auto mb-4 h-12 w-12" />
+                  <h3 className="mb-2 text-lg font-semibold">
+                    {structure.name}
+                  </h3>
+                  <p className="text-muted-foreground text-sm">
                     {structure.description}
                   </p>
                 </CardContent>
@@ -101,9 +111,7 @@ export default function HomePage() {
 
         {/* Status */}
         <div className="mt-12 text-center">
-          <p className="text-sm text-muted-foreground">
-            Hello world!
-          </p>
+          <p className="text-muted-foreground text-sm">Hello world!</p>
         </div>
       </div>
     </div>
